@@ -15,43 +15,42 @@ class ChinhSuaChiTieuActivity : AppCompatActivity() {
         binding = ActivityChinhSuaChiTieuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 1. Nhận dữ liệu hiện tại từ màn hình Chi tiết và hiển thị sẵn lên EditText
-        val tenHienTai = intent.getStringExtra("key_NameKC") ?: ""
-        val tienHienTai = intent.getDoubleExtra("key_Money", 0.0)
-        val ghiChuHienTai = intent.getStringExtra("key_Infor") ?: ""
+        supportActionBar?.title = "Nguyễn Tấn Chính - MSSV - Quản lý chi tiêu cá nhân"
 
+        // 1. Hiển thị sẵn dữ liệu nhận từ màn hình Chi tiết
         with(binding) {
-            edtEditTenKC.setText(tenHienTai)
-            edtEditTien.setText(tienHienTai.toString())
-            edtEditGhichu.setText(ghiChuHienTai)
+            edtEditTenKC.setText(intent.getStringExtra("key_NameKC"))
+            edtEditTien.setText(intent.getDoubleExtra("key_Money", 0.0).toString())
+            edtEditGhichu.setText(intent.getStringExtra("key_Infor"))
+            cbEditDaThanhToan.isChecked = intent.getBooleanExtra("key_Status", false)
 
-            // 2. Nút Lưu: Trả dữ liệu mới về bằng setResult với RESULT_OK
+            // 2. Nút Lưu: Kiểm tra hợp lệ và gửi trả dữ liệu về qua setResult(RESULT_OK)
             btnSave.setOnClickListener {
-                val tenMoi = edtEditTenKC.text.toString().trim()
-                val ghiChuMoi = edtEditGhichu.text.toString().trim()
-                val tienStr = edtEditTien.text.toString().trim()
-                val soTienMoi = tienStr.toDoubleOrNull()
+                val ten = edtEditTenKC.text.toString().trim()
+                val tien = edtEditTien.text.toString().toDoubleOrNull()
+                val ghiChu = edtEditGhichu.text.toString().trim()
+                val isPaid = cbEditDaThanhToan.isChecked
 
-                if (tenMoi.isEmpty()) {
-                    Toast.makeText(this@ChinhSuaChiTieuActivity, "Tên không được để trống", Toast.LENGTH_SHORT).show()
+                if (ten.isBlank()) {
+                    Toast.makeText(this@ChinhSuaChiTieuActivity, "Tên không được để trống!", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-                if (soTienMoi == null || soTienMoi <= 0) {
-                    Toast.makeText(this@ChinhSuaChiTieuActivity, "Số tiền phải lớn hơn 0", Toast.LENGTH_SHORT).show()
+                if (tien == null || tien <= 0) {
+                    Toast.makeText(this@ChinhSuaChiTieuActivity, "Số tiền phải lớn hơn 0!", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                // Đóng gói dữ liệu trả về
-                val resultIntent = Intent().apply {
-                    putExtra("key_NameKC", tenMoi)
-                    putExtra("key_Money", soTienMoi)
-                    putExtra("key_Infor", ghiChuMoi)
+                val returnIntent = Intent().apply {
+                    putExtra("key_NameKC", ten)
+                    putExtra("key_Money", tien)
+                    putExtra("key_Infor", ghiChu)
+                    putExtra("key_Status", isPaid)
                 }
-                setResult(Activity.RESULT_OK, resultIntent)
-                finish() // Đóng màn hình
+                setResult(Activity.RESULT_OK, returnIntent)
+                finish()
             }
 
-            // 3. Nút Hủy: Trả về RESULT_CANCELED (không đổi dữ liệu)
+            // 3. Nút Hủy: Trả về RESULT_CANCELED
             btnCancel.setOnClickListener {
                 setResult(Activity.RESULT_CANCELED)
                 finish()
