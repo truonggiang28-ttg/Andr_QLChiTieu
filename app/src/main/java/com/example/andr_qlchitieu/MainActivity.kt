@@ -10,17 +10,18 @@ import com.example.andr_qlchitieu.models.KhoanChi
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    // Khai báo các biến lưu trữ thông tin khoản chi vừa thêm
-    private var khoanChiHienTai: KhoanChi? = null
-
+    // Câu 4: Sử dụng đối tượng lớp KhoanChi thay cho các biến rời rạc
+    private var lastKhoanChi: KhoanChi? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 1. Xử lý Nút Thêm
+        // Yêu cầu chung: Tiêu đề ActionBar theo đúng cú pháp đề bài
+        supportActionBar?.title = "Nguyễn Tấn Chính - MSSV - Quản lý chi tiêu cá nhân"
+
+        // Câu 1 & 5: Xử lý Thêm khoản chi + Kiểm tra dữ liệu (Validate)
         binding.btnThem.setOnClickListener {
             with(binding) {
                 val tenkc = edtTenKC.text.toString().trim()
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "Tên khoản chi không được để trống!", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
+
                 // Câu 5: Kiểm tra số tiền hợp lệ > 0
                 val sotien = tienStr.toDoubleOrNull()
                 val kc = KhoanChi(
@@ -42,15 +44,16 @@ class MainActivity : AppCompatActivity() {
                     ghiChu = ghichu,
                     daThanhToan = isPaid
                 )
+
                 // Câu 4: Dùng hàm của lớp để kiểm tra
                 if (!kc.laSoTienHopLe()) {
                     Toast.makeText(this@MainActivity, "Số tiền phải là số lớn hơn 0!", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-                // Lưu lại đối tượng
-                lastKhoanChi = kcu
 
-                // Thông báo và dọn sạch giao diện để nhập khoản khác
+                // Lưu lại đối tượng
+                lastKhoanChi = kc
+
                 Toast.makeText(this@MainActivity, "Thêm khoản chi thành công!", Toast.LENGTH_SHORT).show()
                 edtTenKC.text?.clear()
                 edtGhichu.text?.clear()
@@ -59,12 +62,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // 2. Xử lý Nút Xem chi tiết
+        // Câu 2: Chuyển dữ liệu sang DetailActivity bằng Intent
         binding.btnDetail.setOnClickListener {
             if (lastKhoanChi == null) {
                 Toast.makeText(this@MainActivity, "Chưa có khoản chi nào! Vui lòng bấm Thêm trước.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
             val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
                 putExtra("key_NameKC", lastKhoanChi?.tenKhoanChi)
                 putExtra("key_Money", lastKhoanChi?.soTien)
