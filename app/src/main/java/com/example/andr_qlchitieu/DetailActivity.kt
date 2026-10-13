@@ -16,7 +16,7 @@ class DetailActivity : AppCompatActivity() {
             bundle ->
             with(binding){
                 val namekc = bundle.getString("key_NameKC")
-                val tienkc = bundle.getString("key_Money")
+                val tienkc = bundle.getDouble("key_Money", 0.0)
                 val ghichukc = bundle.getString("key_Infor")
 
                 tvTenKC.text = "${namekc}"
