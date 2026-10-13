@@ -9,6 +9,11 @@ import com.example.andr_qlchitieu.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    // Khai báo các biến lưu trữ thông tin khoản chi vừa thêm
+    private var lastTenKC: String? = null
+    private var lastSoTien: Double? = null
+    private var lastGhiChu: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,14 +31,19 @@ class MainActivity : AppCompatActivity() {
                 if (sotien == null || sotien <= 0) {
                     Toast.makeText(
                         this@MainActivity,
-                        "Tiền phải lớn hơn 0 hoặc không được bỏ trống",
+                        "Số tiền phải lớn hơn 0 và không được bỏ trống",
                         Toast.LENGTH_SHORT
                     ).show()
                     return@setOnClickListener
                 }
 
-                // Thông báo thêm thành công và dọn sạch ô nhập liệu
-                Toast.makeText(this@MainActivity, "Thêm thành công!", Toast.LENGTH_SHORT).show()
+                // LƯU DỮ LIỆU VÀO BIẾN TOÀN CỤC TRƯỚC KHIN CLEAR GIAO DIỆN
+                lastTenKC = tenkc
+                lastSoTien = sotien
+                lastGhiChu = ghichu
+
+                // Thông báo và dọn sạch giao diện để nhập khoản khác
+                Toast.makeText(this@MainActivity, "Thêm khoản chi thành công!", Toast.LENGTH_SHORT).show()
                 edtTenKC.text?.clear()
                 edtGhichu.text?.clear()
                 edtTien.text?.clear()
@@ -42,29 +52,23 @@ class MainActivity : AppCompatActivity() {
 
         // 2. Xử lý Nút Xem chi tiết
         binding.btnDetail.setOnClickListener {
-            with(binding) {
-                val tenkc = edtTenKC.text.toString().trim()
-                val ghichu = edtGhichu.text.toString().trim()
-                val tien = edtTien.text.toString().trim()
-
-                val sotien = tien.toDoubleOrNull()
-                if (sotien == null || sotien <= 0) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Vui lòng nhập số tiền hợp lệ trước khi xem chi tiết",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }
-
-                // Khởi tạo Intent đúng cú pháp và ghép đúng dữ liệu
-                val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
-                    putExtra("key_NameKC", tenkc)
-                    putExtra("key_Money", sotien) // Khai báo đúng key_Money với số tiền
-                    putExtra("key_Infor", ghichu) // Khai báo đúng key_Infor với ghi chú
-                }
-                startActivity(intent)
+            // Kiểm tra xem người dùng đã bấm Thêm khoản chi nào chưa
+            if (lastTenKC == null || lastSoTien == null) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Chưa có khoản chi nào! Vui lòng bấm Thêm trước.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
             }
+
+            // Lấy dữ liệu từ biến toàn cục đã lưu để chuyển sang DetailActivity
+            val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
+                putExtra("key_NameKC", lastTenKC)
+                putExtra("key_Money", lastSoTien)
+                putExtra("key_Infor", lastGhiChu)
+            }
+            startActivity(intent)
         }
     }
 }
