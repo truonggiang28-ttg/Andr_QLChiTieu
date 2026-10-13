@@ -29,13 +29,26 @@
         android:text="Noi dung ghi chu"
         android:textSize="18sp"
         android:layout_marginBottom="10dp"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
 
     <Button
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
+        android:textSize="18sp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="10dp"/>
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chinh sua"
         android:textSize="18sp"/>
-
+</LinearLayout>
 
 </LinearLayout>
