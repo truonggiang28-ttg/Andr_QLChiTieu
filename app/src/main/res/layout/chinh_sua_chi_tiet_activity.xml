@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/edt_NameNew_313"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhap ten moi"
+        android:textSize="18sp"/>
+    <EditText
+        android:id="@+id/edt_TienNew_313"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhap tien moi"
+        android:textSize="18sp"/>
+    <EditText
+        android:id="@+id/edt_GhiChuNew_313"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhap ghi chu moi"
+        android:textSize="18sp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btnLuu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Luu du lieu"
+            android:textSize="18sp"/>
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Huy"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
