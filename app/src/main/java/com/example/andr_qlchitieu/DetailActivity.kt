@@ -12,6 +12,17 @@ class DetailActivity: AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        intent.extras?.let{
+            bundle ->
+            with(binding){
+                tvNameKC.text = bundle.getString("key_NameKC")
+                tvMoney.text = bundle.getDouble("key_SoTien").toString()
+                tvGhiChu.text = bundle.getString("key_GhiChu")
+            }
+        }
 
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 }
