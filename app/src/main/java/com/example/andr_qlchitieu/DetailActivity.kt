@@ -48,7 +48,7 @@ class DetailActivity: AppCompatActivity() {
                     putExtra("key_edtTien",tvMoney.text)
                     putExtra("key_edtGhiChu",tvGhiChu.text)
                 }
-                editLauncher
+                editLauncher.launch(intent)
             }
         }
     }
