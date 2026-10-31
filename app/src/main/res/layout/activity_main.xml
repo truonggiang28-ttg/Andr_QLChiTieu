@@ -34,14 +34,14 @@
         android:id="@+id/edt_Money"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhap ho va ten"
+        android:hint="So Tien"
         android:textSize="18dp"
         android:padding="15sp"/>
     <EditText
         android:id="@+id/edt_GhiChu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhap ho va ten"
+        android:hint="Ghi chu"
         android:textSize="18dp"
         android:padding="15sp"/>
     <LinearLayout
