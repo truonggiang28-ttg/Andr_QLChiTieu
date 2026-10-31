@@ -47,9 +47,13 @@ class MainActivity : AppCompatActivity() {
             with(binding){
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
                     .apply{
-
+                        putExtra("key_NameKC", TenKC_313)
+                        putExtra("key_SoTien", SoTien_313)
+                        putExtra("key_GhiChu", GhiChu_313)
                     }
+                startActivity(intent)
             }
+
         }
 
     }
